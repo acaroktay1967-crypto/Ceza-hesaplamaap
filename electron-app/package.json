@@ -1,0 +1,32 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "Electron kısa karar uygulaması",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^25.3.1",
+    "electron-builder": "^24.6.0"
+  },
+  "build": {
+    "appId": "com.kisakarar.app",
+    "productName": "Kısa Karar Uygulaması",
+    "directories": {
+      "output": "dist"
+    },
+    "files": ["**/*"],
+    "win": {
+      "target": ["nsis"],
+      "icon": "icon.ico"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "icon.icns"
+    }
+  },
+  "author": "acaroktay1967-crypto",
+  "license": "ISC"
+}
