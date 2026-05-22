@@ -1,7 +1,20 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-// Karar metni oluşturma için örnek fonksiyon
+// Adli para cezasını gün olarak hesaplayan yeni fonksiyon
+function calculateFineFromDays(gunSayisi) {
+  const gunlukCeza = 100; // 100 TL her gün için
+  const toplamCeza = gunSayisi * gunlukCeza; // Toplam ceza günlük ücretle çarpılır
+  const taksitSayisi = Math.floor(Math.random() * (12 - 4 + 1)) + 4; // 4-12 arası taksit
+  const taksitMiktari = Math.ceil(toplamCeza / taksitSayisi); // Taksit başına ödenecek miktar
+
+  return {
+    toplamCeza,
+    taksitSayisi,
+    taksitMiktari,
+  };
+}
+
 function generateKararMetni(cezaSuresi, yas, sabikaVar, sabikaSuresi, magdurZarariOde, kisaKarar = false, esasCeza = "") {
   let kararMetni = "";
 
@@ -21,7 +34,7 @@ function generateKararMetni(cezaSuresi, yas, sabikaVar, sabikaSuresi, magdurZara
     const gunlukCeza = 100; // 100 TL
     const paraCezasi = cezaSuresi * 365 * gunlukCeza;
     const taksitSayisi = Math.floor(Math.random() * (12 - 4 + 1)) + 4; // 4-12 arası taksit
-    kararMetni += `Kısa süreli hapis cezası, TCK 52/2 gereğince ${paraCezasi} TL adli para cezasına çevrilmiş ve ${taksitSayisi} takside bölünmüştür.\n`;
+    kararMetni += `Kısa süreli hapis cezası, TCK 52/2 gereğince ${paraCezasi} TL adli para cezasına çevrilmiş ve ${taksitSayisi} taksite bölünmüştür.\n`;
     if (kisaKarar) return kararMetni;
   }
 
@@ -74,6 +87,18 @@ function createWindow() {
     <body>
       <h1>Kısa Karar</h1>
       <pre>${kararMetni}</pre>
+      <button onclick="calculateFineFromPrompt()">Adli Para Cezasını Hesapla</button>
+      <script>
+        function calculateFineFromPrompt() {
+          const gun = prompt('Adli para cezası gün sayısını girin:');
+          const gunSayisi = parseInt(gun, 10);
+          const gunlukCeza = 100;
+          const toplamCeza = gunSayisi * gunlukCeza;
+          const taksitSayisi = Math.floor(Math.random() * (12 - 4 + 1)) + 4;
+          const taksitMiktari = Math.ceil(toplamCeza / taksitSayisi);
+          alert(`Toplam Adli Para Cezası: ${toplamCeza} TL\nTaksit Sayısı: ${taksitSayisi}\nTaksit Başına Ödeme: ${taksitMiktari} TL`);
+        }
+      </script>
     </body>
     </html>
   `));
